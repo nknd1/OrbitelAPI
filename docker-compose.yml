@@ -1,0 +1,27 @@
+﻿networks:
+  my_network:
+    driver: bridge
+
+services:
+  orbitel-api:
+    image: orbitel-api
+    build:
+      context: .
+      dockerfile: orbitel-api/Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: orbitel_api
+    environment:
+      DB_HOST: orbtielapi-postgres-1
+      DB_PORT: 5432
+      DB_NAME: orbitel
+      DB_USER: sa
+      DB_PASSWORD: sa
+    networks:
+      - my_network
+
+  orbitelclient:
+    image: orbitelclient
+    build:
+      context: .
+      dockerfile: OrbitelClient/Dockerfile

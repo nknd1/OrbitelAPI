@@ -1,0 +1,9 @@
+bin/
+obj/
+orbitel-api.sln.DotSettings.user
+orbitel-test/
+*.idea
+OrbitelClient/
+/packages/
+riderModule.iml/   
+/_ReSharper.Caches/
