@@ -2,6 +2,10 @@ bin/
 obj/
 orbitel-api.sln.DotSettings.user
 orbitel-api.sln
+appsettings.Development.json
+appsettings.json
+orbitel-api.csproj
+orbitel-api.http
 *.idea
 OrbitelClient/
 /packages/
