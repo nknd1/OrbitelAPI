@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using OrbitelApi.Models;
 using OrbitelApi.DBContext;
 using OrbitelApi.Models.Dtos;
 using OrbitelApi.Models.Entities.Clients;

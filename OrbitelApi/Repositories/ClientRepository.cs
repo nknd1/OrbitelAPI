@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrbitelApi.Models;
 using OrbitelApi.DBContext;
 using OrbitelApi.Models.Entities.Clients;
 

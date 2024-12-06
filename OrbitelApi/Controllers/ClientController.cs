@@ -1,7 +1,5 @@
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OrbitelApi.Models;
 using OrbitelApi.Models.Dtos;
 using OrbitelApi.Services;
 
