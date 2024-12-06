@@ -4,6 +4,7 @@ orbitel-api.sln.DotSettings.user
 orbitel-api.sln
 appsettings.Development.json
 appsettings.json
+orbitel-api-test/orbitel-api-test.csproj
 orbitel-api.csproj
 orbitel-api.http
 *.idea
