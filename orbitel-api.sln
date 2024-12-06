@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "orbitel-test", "orbitel-test\orbitel-test.csproj", "{59CC43E6-E75E-4F95-87AF-7084180DA045}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,9 +17,5 @@ Global
 		{769966D7-AD21-474C-A1C7-9912B9D32DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{769966D7-AD21-474C-A1C7-9912B9D32DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{769966D7-AD21-474C-A1C7-9912B9D32DAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59CC43E6-E75E-4F95-87AF-7084180DA045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59CC43E6-E75E-4F95-87AF-7084180DA045}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59CC43E6-E75E-4F95-87AF-7084180DA045}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59CC43E6-E75E-4F95-87AF-7084180DA045}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
