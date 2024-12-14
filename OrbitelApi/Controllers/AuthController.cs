@@ -13,14 +13,14 @@ namespace OrbitelApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(OrbitelContext context, IConfiguration _configuration) : ControllerBase
+public class AuthController(OrbitelContext context, IConfiguration configuration) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] ClientRegisterDto dto)
     {
         if (context.Clients.Any(c => c.FullName == dto.FullName))
         {
-            return BadRequest("Клиент уже существует");
+            return BadRequest("Клиент уже существует в системе");
         }
 
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
@@ -40,7 +40,9 @@ public class AuthController(OrbitelContext context, IConfiguration _configuratio
             Email = dto.Email ?? null,
             PasswordHash = passwordHash
         };
+        
         context.Clients.Add(client);
+        
         await context.SaveChangesAsync();
 
         return Ok("Клиент успешно создан");
@@ -61,7 +63,7 @@ public class AuthController(OrbitelContext context, IConfiguration _configuratio
     private string GenerateJwtToken(Client client)
     {
         // Получаем настройки JWT
-        var jwtSettings = _configuration.GetSection("JwtSettings");
+        var jwtSettings = configuration.GetSection("JwtSettings");
         var secretKey = jwtSettings["SecretKey"];
 
         // Проверяем длину ключа

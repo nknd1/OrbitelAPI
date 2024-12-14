@@ -10,7 +10,7 @@ namespace OrbitelApi.Controllers;
 public class ClientController(IClientService clientService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<ClientDto>>> GetClients()
+    public async Task<ActionResult<IEnumerable<ClientDto>>> GetClients()
     {
         var clients = await clientService.GetAllClients();
         var response = clients.Select(c => new ClientDto(c.ClientId, c.FullName, c.Phone, c.Email));
