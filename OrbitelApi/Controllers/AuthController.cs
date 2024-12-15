@@ -86,7 +86,7 @@ public class AuthController(OrbitelContext context, IConfiguration configuration
             issuer: jwtSettings["Issuer"],
             audience: jwtSettings["Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
+            expires: DateTime.UtcNow.AddMinutes(2),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

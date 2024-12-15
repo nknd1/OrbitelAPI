@@ -10,7 +10,7 @@ using OrbitelApi.Models;
 using OrbitelApi.Repositories;
 using OrbitelApi.Services;
 
-var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -26,10 +26,11 @@ builder.Services.AddDbContext<OrbitelContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: myAllowSpecificOrigins,
+    options.AddPolicy(name: MyAllowSpecificOrigins,
         policy  =>
         {
-            policy.WithOrigins("*");
+            policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+           
         });
 });
 
@@ -81,6 +82,6 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 
 //app.UseAuthorization();
-app.UseCors(myAllowSpecificOrigins);
+app.UseCors(MyAllowSpecificOrigins);
 app.MapControllers();
 app.Run();
