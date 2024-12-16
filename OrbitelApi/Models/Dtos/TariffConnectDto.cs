@@ -1,9 +1,6 @@
 ﻿namespace OrbitelApi.Models.Dtos;
 
-public class TariffConnectDto
-{
-    public long TariffId { get; set; }
-
-    public long ContractId { get; set; }
-
-}
+public record TariffConnectDto(
+    long TariffId,
+    long ContractId
+);
