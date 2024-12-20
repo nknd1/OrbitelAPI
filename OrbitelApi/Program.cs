@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using orbitel_api.Middlewares;
 using OrbitelApi;
 using OrbitelApi.AuthConfigs;
 using OrbitelApi.DBContext;
@@ -69,7 +70,7 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 app.UseAuthentication();
-
+app.UseMiddleware<JwtMiddleware>();
 
 
 // Configure the HTTP request pipeline.

@@ -38,7 +38,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Middlewares\" />
       <Folder Include="Models\Entities\" />
     </ItemGroup>
 
