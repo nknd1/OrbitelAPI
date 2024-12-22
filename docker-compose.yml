@@ -1,13 +1,10 @@
-﻿networks:
-  my_network:
-    driver: bridge
-
+﻿
 services:
-  orbitel-api:
+  OrbitelApi:
     image: orbitel-api
     build:
       context: .
-      dockerfile: orbitel-api/Dockerfile
+      dockerfile: OrbitelApi/Dockerfile
     ports:
       - "8080:8080"
     container_name: orbitel_api
@@ -18,10 +15,7 @@ services:
       DB_USER: sa
       DB_PASSWORD: sa
     networks:
-      - my_network
-
-  orbitelclient:
-    image: orbitelclient
-    build:
-      context: .
-      dockerfile: OrbitelClient/Dockerfile
+      - ping-pong-network
+networks:
+    ping-pong-network:
+      driver: bridge

@@ -7,15 +7,15 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["orbitel-api/orbitel-api.csproj", "orbitel-api/"]
-RUN dotnet restore "orbitel-api/orbitel-api.csproj"
+COPY ["OrbitelApi/OrbitelApi.csproj", "OrbitelApi/"]
+RUN dotnet restore "OrbitelApi/OrbitelApi.csproj"
 COPY . .
-WORKDIR "/src/orbitel-api"
-RUN dotnet build "orbitel-api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/OrbitelApi"
+RUN dotnet build "OrbitelApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "orbitel-api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "OrbitelApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
