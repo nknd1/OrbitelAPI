@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbitelApiTests", "OrbitelApiTests\OrbitelApiTests.csproj", "{B06840B2-256F-4001-8756-F0B96B4DB7F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbitelApi.Tests", "OrbitelApi.Tests\OrbitelApi.Tests.csproj", "{B06840B2-256F-4001-8756-F0B96B4DB7F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

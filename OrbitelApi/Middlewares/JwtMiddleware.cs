@@ -29,7 +29,7 @@ public class JwtMiddleware(RequestDelegate next, IConfiguration configuration)
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = false,
                 ValidateAudience = false
-            }, out SecurityToken validatedToken);
+            }, out var validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;
             var clientIdString = jwtToken.Claims.First(x => x.Type == "ClientId").Value;
