@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrbitelApi.DBContext;
 using OrbitelApi.Models.Entities.Clients;
 
@@ -11,4 +12,7 @@ public class ClientRepository(OrbitelContext context) : IClientRepository
         var clients = await context.Clients.ToListAsync();
         return clients;
     }
+
+   //TODO: impl public async Task<ActionResult> GetContract()
+   
 }

@@ -8,7 +8,7 @@ public class JwtMiddleware(RequestDelegate next, IConfiguration configuration)
 {
     public async Task Invoke(HttpContext context)
     {
-        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+        var token = context.Request.Headers.Authorization.FirstOrDefault()?.Split(" ").Last();
 
         if (token != null)
             AttachUserToContext(context, token);

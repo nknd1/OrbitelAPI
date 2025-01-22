@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrbitelApi.DBContext;
 using OrbitelApi.Models.Dtos;
+using OrbitelApi.Models.Entities.Contracts;
 using OrbitelApi.Services;
 
 namespace OrbitelApi.Controllers;
@@ -50,7 +51,7 @@ public class ClientController(IClientService clientService, OrbitelContext conte
 
         // Пробуем преобразовать clientIdObj к int
         int clientId;
-        
+
         try
         {
             clientId = Convert.ToInt32(clientIdObj);
@@ -75,10 +76,68 @@ public class ClientController(IClientService clientService, OrbitelContext conte
                 cc.Contract.PersonalAccount
             })
             .ToListAsync();
-        
+
         if (contracts.Count == 0)
             return NotFound("Договоры не найдены для данного клиента.");
-        
+
         return Ok(contracts);
+    }
+
+     [HttpGet("details")]
+    public async Task<IActionResult> GetContractDetails([FromQuery] long contractId)
+    {
+        try
+        {
+            // Получение clientId из токена или контекста
+            if (!HttpContext.Items.TryGetValue("Client", out var clientIdObj) || clientIdObj is not long clientId)
+            {
+                return Unauthorized(new { error = "Unauthorized" });
+            }
+
+            // LINQ-запрос для получения информации о договоре
+            var contractDetails = await (from c in context.Contracts
+                                         join cc in context.ClientContracts on c.ContractId equals cc.ContractId
+                                         join tc in context.TariffConnects on c.ContractId equals tc.ContractId
+                                         join t in context.Tariffs on tc.TariffId equals t.TariffId
+                                         where cc.ClientId == clientId && c.ContractId == contractId
+                                         select new
+                                         {
+                                             c.ContractId,
+                                             t.TariffName,
+                                             TariffPrice = t.PricePerMonth,
+                                             t.Speed
+                                         }).FirstOrDefaultAsync();
+
+            if (contractDetails == null)
+            {
+                return NotFound(new { error = "Contract not found" });
+            }
+
+            // LINQ-запрос для получения связанных услуг
+            var services = await (from s in context.Services
+                                  join sc in context.ServiceConnects on s.ServiceId equals sc.ServiceId
+                                  where (from tc in context.TariffConnects
+                                         where tc.ContractId == contractId
+                                         select tc.TariffId).Contains(sc.TariffId)
+                                  select new
+                                  {
+                                      s.ServiceId,
+                                      s.ServiceName,
+                                      s.Feature,
+                                      s.Price
+                                  }).ToListAsync();
+
+            // Формирование ответа
+            return Ok(new
+            {
+                ContractDetails = contractDetails,
+                Services = services
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error occurred: {ex.Message}");
+            return StatusCode(500, new { error = "Internal Server Error" });
+        }
     }
 }
