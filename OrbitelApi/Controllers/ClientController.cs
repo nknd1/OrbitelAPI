@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrbitelApi.DBContext;
 using OrbitelApi.Models.Dtos;
 using OrbitelApi.Services;
@@ -24,21 +25,60 @@ public class ClientController(IClientService clientService, OrbitelContext conte
         if (!HttpContext.Items.TryGetValue("Client", out var clientIdObj) || clientIdObj == null)
             return Unauthorized();
 
-        if (clientIdObj is long clientId) // Проверяем, является ли объект long
+        if (clientIdObj is not long clientId)
+            return BadRequest("Invalid client ID format."); // Проверяем, является ли объект long
+
+        var client = context.Clients.Find(clientId); // Убедитесь, что у вас есть доступ к контексту базы данных
+
+        if (client == null)
+            return NotFound();
+
+        return Ok(new
         {
-            var client = context.Clients.Find(clientId); // Убедитесь, что у вас есть доступ к контексту базы данных
+            client.Login,
+            client.FullName,
+            // другие данные, которые вы хотите вернуть
+        });
+    }
 
-            if (client == null)
-                return NotFound();
+    [HttpGet("contracts")]
+    public async Task<IActionResult> GetContract()
+    {
+        // Проверяем, есть ли идентификатор клиента в HttpContext
+        if (!HttpContext.Items.TryGetValue("Client", out var clientIdObj) || clientIdObj == null)
+            return Unauthorized();
 
-            return Ok(new
-            {
-                client.Login,
-                client.FullName,
-                // другие данные, которые вы хотите вернуть
-            });
+        // Пробуем преобразовать clientIdObj к int
+        int clientId;
+        
+        try
+        {
+            clientId = Convert.ToInt32(clientIdObj);
+        }
+        catch (InvalidCastException)
+        {
+            return BadRequest("Неверный формат идентификатора клиента.");
+        }
+        catch (OverflowException)
+        {
+            return BadRequest("Идентификатор клиента слишком велик.");
         }
 
-        return BadRequest("Invalid client ID format.");
+        var contracts = await context.ClientContracts
+            .Where(cc => cc.ClientId == clientId)
+            .Select(cc => new
+            {
+                cc.Contract.ContractId,
+                cc.Contract.ContractNumber,
+                cc.Contract.ConnectAddress,
+                cc.Contract.Balance,
+                cc.Contract.PersonalAccount
+            })
+            .ToListAsync();
+        
+        if (contracts.Count == 0)
+            return NotFound("Договоры не найдены для данного клиента.");
+        
+        return Ok(contracts);
     }
 }

@@ -35,7 +35,7 @@ public class JwtMiddleware(RequestDelegate next, IConfiguration configuration)
             var clientIdString = jwtToken.Claims.First(x => x.Type == "ClientId").Value;
 
             // Преобразуем clientId в long и сохраняем в контексте
-            if (long.TryParse(clientIdString, out long clientId))
+            if (long.TryParse(clientIdString, out var clientId))
             {
                 // Здесь вы можете загрузить данные клиента из базы данных и прикрепить их к контексту
                 context.Items["Client"] = clientId; // Сохраняем как long
