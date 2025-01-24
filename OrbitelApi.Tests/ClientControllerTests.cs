@@ -48,4 +48,10 @@ public class ClientControllerTests
             Assert.Equal(expectedClients[i].Email, clientDtos[i].Email);
         }
     }
+
+    [Fact]
+    public void METHOD()
+    {
+        
+    }
 }

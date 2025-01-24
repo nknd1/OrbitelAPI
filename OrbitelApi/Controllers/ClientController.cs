@@ -136,8 +136,8 @@ public class ClientController(IClientService clientService, OrbitelContext conte
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error occurred: {ex.Message}");
-            return StatusCode(500, new { error = "Internal Server Error" });
+            return StatusCode(500, new { error = "Internal Server Error" }); 
+            
         }
     }
 }
