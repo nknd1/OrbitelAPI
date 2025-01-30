@@ -18,25 +18,25 @@ public class OrbitelContext : DbContext
     {
     }
 
-    public virtual DbSet<Client> Clients { get; set; }
+    public virtual DbSet<Client> Clients { get; init; }
 
-    public virtual DbSet<ClientContract> ClientContracts { get; set; }
+    public virtual DbSet<ClientContract> ClientContracts { get; init; }
 
-    public virtual DbSet<Contract> Contracts { get; set; }
+    public virtual DbSet<Contract> Contracts { get; init; }
 
-    public virtual DbSet<Deposit> Deposits { get; set; }
+    public virtual DbSet<Deposit> Deposits { get; init; }
 
-    public virtual DbSet<Service> Services { get; set; }
+    public virtual DbSet<Service> Services { get; init; }
 
-    public virtual DbSet<ServiceConnect> ServiceConnects { get; set; }
+    public virtual DbSet<ServiceConnect> ServiceConnects { get; init; }
 
-    public virtual DbSet<ServiceType> ServiceTypes { get; set; }
+    public virtual DbSet<ServiceType> ServiceTypes { get; init; }
 
-    public virtual DbSet<Tariff> Tariffs { get; set; }
+    public virtual DbSet<Tariff> Tariffs { get; init; }
 
-    public virtual DbSet<TariffConnect> TariffConnects { get; set; }
+    public virtual DbSet<TariffConnect> TariffConnects { get; init; }
 
-    public virtual DbSet<Writeoff> Writeoffs { get; set; }
+    public virtual DbSet<Writeoff> Writeoffs { get; init; }
     
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
