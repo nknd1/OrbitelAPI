@@ -52,11 +52,17 @@ public class AuthController(OrbitelContext context, IConfiguration configuration
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] ClientLoginDto loginDto)
     {
-        var client = await context.Clients.SingleOrDefaultAsync(c => c.Login == loginDto.Login);
+        var client = await context
+            .Clients
+            .SingleOrDefaultAsync(c => c.Login == loginDto.Login);
+        
         if (client == null || !BCrypt.Net.BCrypt.Verify(loginDto.PasswordHash, client.PasswordHash))
+        {
             return Unauthorized("Неверные данные для входа");
+        }
 
         var token = GenerateJwtToken(client);
+        
         return Ok(new { Token = token });
     }
 
@@ -68,7 +74,10 @@ public class AuthController(OrbitelContext context, IConfiguration configuration
 
         // Проверяем длину ключа
         if (string.IsNullOrEmpty(secretKey) || secretKey.Length < 32)
+        {
             throw new InvalidOperationException("SecretKey должен быть не менее 32 символов.");
+        }
+          
 
         // Настраиваем токен
         var claims = new[]

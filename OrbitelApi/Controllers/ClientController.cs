@@ -107,6 +107,7 @@ public class ClientController(IClientService clientService, OrbitelContext conte
                                              TariffPrice = t.PricePerMonth,
                                              t.Speed
                                          }).FirstOrDefaultAsync();
+            
 
             if (contractDetails == null)
             {

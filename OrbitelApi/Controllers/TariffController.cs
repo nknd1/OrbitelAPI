@@ -21,9 +21,13 @@ public class TariffController(OrbitelContext _context) : ControllerBase
     public async Task<ActionResult<Tariff>> GetTariffById(long TariffId)
     {
         if (TariffId <= 0)
+        {
             return BadRequest("tariffs not found");
+        }
         
-        var res = await _context.Tariffs.FindAsync(TariffId);
+        var res = await _context
+            .Tariffs
+            .FindAsync(TariffId);
 
         return Ok(TariffId);
     }
